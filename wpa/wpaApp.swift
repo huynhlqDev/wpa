@@ -10,23 +10,12 @@ import SwiftData
 
 @main
 struct wpaApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @State private var pipe = Pipe(type: .straightHorizontal, rotation: 1) // ✅ @State ở parent view
+    @State private var flowing = true
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PipeDemoView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }
